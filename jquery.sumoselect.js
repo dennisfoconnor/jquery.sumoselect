@@ -288,7 +288,7 @@
                         // setting sel item to visible view.
                         var ul = O.optDiv.find('ul'),
                             st = ul.scrollTop(),
-                            t = sel.position().top + st;                            
+                            t = sel.position().top + st;
                         if(t >= st + ul.height()-sel.outerHeight())
                             ul.scrollTop(t - ul.height() + sel.outerHeight());
                         if(t<st)
@@ -382,7 +382,7 @@
                     O.placeholder = "";
                     if (O.is_multi) {
                         sels = O.E.children(':selected').not(':disabled'); //selected options.
-                        
+
                         for (i = 0; i < sels.length; i++) {
                                 if (i + 1 >= settings.csvDispCount && settings.csvDispCount) {
                                     if (sels.length == O.E.find('option').length && settings.captionFormatAllSelected != null) {
@@ -390,7 +390,7 @@
                                     } else {
                                         O.placeholder = settings.captionFormat.replace('{0}', sels.length);
                                     }
-                                    
+
                                     //O.placeholder = i + '+ Selected';
                                     break;
                                 }
@@ -443,8 +443,10 @@
 
                 setNativeMobile: function () {
                     var O = this;
-                    O.E.addClass('SelectClass')//.css('height', O.select.outerHeight());
-					O.mob = true;
+                    O.E.addClass('SelectClass');
+                    //Adding the optgroup fixes the select issue with iOs
+                    O.E.prepend('<optgroup disabled label="Label"></optgroup>');
+                    O.mob = true;
                     O.E.change(function () {
                         O.setText();
                     });
