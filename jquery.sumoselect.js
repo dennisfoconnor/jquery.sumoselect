@@ -138,7 +138,7 @@
                     var O = this;
 
                     if(!opt.attr('value'))opt.attr('value',opt.val());
-                                                                                    // todo: remove this data val 
+                                                                                    // todo: remove this data val
                     li = $('<li class="opt"><label>' + opt.text() + '</label></li>');//.data('val',opt.val());
                     li.data('opt', opt);    // store a direct reference to option.
                     opt.data('li', li);    // store a direct reference to list item.
@@ -346,12 +346,12 @@
                     O.showOpts();
                 },
                 nav: function (up) {
-                    var O = this, c, 
+                    var O = this, c,
                     s=O.ul.find('li.opt:not(.disabled, .hidden)'),
                     sel = O.ul.find('li.opt.sel:not(.hidden)'),
                     idx = s.index(sel);
                     if (O.is_opened && sel.length) {
-                        
+
                         if (up && idx > 0)
                             c = s.eq(idx-1);
                         else if(!up && idx < s.length-1 && idx > -1)
@@ -364,7 +364,7 @@
                         // setting sel item to visible view.
                         var ul = O.ul,
                             st = ul.scrollTop(),
-                            t = sel.position().top + st;                            
+                            t = sel.position().top + st;
                         if(t >= st + ul.height()-sel.outerHeight())
                             ul.scrollTop(t - ul.height() + sel.outerHeight());
                         if(t<st)
@@ -507,8 +507,10 @@
 
                 setNativeMobile: function () {
                     var O = this;
-                    O.E.addClass('SelectClass')//.css('height', O.select.outerHeight());
-					O.mob = true;
+                    O.E.addClass('SelectClass');
+                    //Adding the optgroup fixes the select issue with iOs
+                    O.E.prepend('<optgroup disabled label="Label"></optgroup>');
+                    O.mob = true;
                     O.E.change(function () {
                         O.setText();
                     });
@@ -549,13 +551,13 @@
                     else{
                         opt = O.E.find('option[value="'+i+'"]')[0]||0;
                     }
-                    if (!opt || opt.disabled) 
+                    if (!opt || opt.disabled)
                         return;
 
                     if(opt.selected != c){
                         opt.selected = c;
                         if(!O.mob) $(opt).data('li').toggleClass('selected',c);
-                        
+
                         O.callChange();
                         O.setPstate();
                         O.setText();
